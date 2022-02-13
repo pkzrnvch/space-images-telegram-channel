@@ -1,9 +1,10 @@
 import datetime
 import os
 from pathlib import Path
-from urllib.parse import urlsplit, quote
+from urllib.parse import urlsplit
 import requests
 from dotenv import load_dotenv
+import telegram
 
 
 def download_image(image_url, file_path, payload=None):
@@ -68,12 +69,18 @@ def fetch_latest_nasa_epic(nasa_token):
         download_image(url, file_path, payload=payload)
 
 
+def telegram_channel_post(message, tg_token, chat_id='@Wowspacephotos'):
+    bot = telegram.Bot(token=tg_token)
+    bot.send_message(text=message, chat_id=chat_id)
+
 def main():
     load_dotenv()
     nasa_token = os.getenv('NASA_API_KEY')
+    tg_token = os.getenv('TG_TOKEN')
     #fetch_spacex_latest_launch()
     #fetch_latest_nasa_epic(nasa_token)
     #fetch_nasa_apod(nasa_token)
+    telegram_channel_post('Space', tg_token)
 
 
 if __name__ == '__main__':
