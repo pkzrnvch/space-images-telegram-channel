@@ -18,10 +18,9 @@ def choose_photo_to_post():
     return image_to_post
 
 
-def post_photo_to_telegram(tg_token, chat_id):
+def post_photo_to_telegram(tg_token, chat_id, photo_to_post):
     bot = telegram.Bot(token=tg_token)
-    image_to_post = choose_photo_to_post()
-    with open(image_to_post, 'rb') as image_to_post:
+    with open(photo_to_post, 'rb') as image_to_post:
         bot.send_photo(chat_id=chat_id, photo=image_to_post)
 
 
@@ -38,7 +37,8 @@ def main():
     fetch_latest_nasa_epic(nasa_token)
     fetch_nasa_apod(nasa_token)
     while True:
-        post_photo_to_telegram(tg_token, tg_chat_id)
+        photo_to_post = choose_photo_to_post()
+        post_photo_to_telegram(tg_token, tg_chat_id, photo_to_post)
         sleep(seconds_between_posts)
 
 
