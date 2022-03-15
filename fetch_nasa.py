@@ -9,15 +9,15 @@ def fetch_nasa_apod(nasa_token, count=25):
     payload = {
         'api_key': nasa_token,
         'count': count,
-             }
+    }
     nasa_apod_api_url = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(nasa_apod_api_url, params=payload)
     response.raise_for_status()
     apod_images_urls = []
     for element in response.json():
         apod_images_urls.append(element['url'])
-    for index, url in enumerate(apod_images_urls):
-        file_path = Path(f'./images/apod{index + 1}{get_extension(url)}')
+    for index, url in enumerate(apod_images_urls, start=1):
+        file_path = Path(f'./images/apod{index}{get_extension(url)}')
         download_image(url, file_path)
 
 
@@ -34,6 +34,6 @@ def fetch_latest_nasa_epic(nasa_token):
         image_url = 'https://api.nasa.gov/EPIC/archive/natural/'\
                     f'{image_datetime:%Y/%m/%d}/png/{image_name}.png'
         epic_images_urls.append(image_url)
-    for index, url in enumerate(epic_images_urls):
-        file_path = Path(f'./images/epic{index + 1}{get_extension(url)}')
+    for index, url in enumerate(epic_images_urls, start=1):
+        file_path = Path(f'./images/epic{index}{get_extension(url)}')
         download_image(url, file_path, payload=payload)
