@@ -3,8 +3,8 @@ from urllib.parse import urlsplit
 
 import requests
 
+
 def download_image(image_url, file_path, payload=None):
-    file_path.parent.mkdir(parents=True, exist_ok=True)
     response = requests.get(image_url, params=payload)
     response.raise_for_status()
     with open(file_path, 'wb') as file:
