@@ -1,4 +1,4 @@
-# Telegram space images
+# Telegram space images channel bot
 
 This program fetches space photos and uploads them to telegram channel.
 
